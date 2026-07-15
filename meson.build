@@ -8,7 +8,7 @@
 
 project('postgresql',
   ['c'],
-  version: '19beta1',
+  version: '20devel',
   license: 'PostgreSQL',
 
   # We want < 0.62 for python 3.6 compatibility on old platforms.
@@ -2060,21 +2060,6 @@ foreach builtin : builtins
     cdata.set('HAVE@0@'.format(fname.to_upper()), 1)
   endif
 endforeach
-
-
-# Check if the C compiler understands __builtin_types_compatible_p,
-# and define HAVE__BUILTIN_TYPES_COMPATIBLE_P if so.
-#
-# We check usage with __typeof__, though it's unlikely any compiler would
-# have the former and not the latter.
-if cc.compiles('''
-    static int x;
-    static int y[__builtin_types_compatible_p(__typeof__(x), int)];
-    ''',
-    name: '__builtin_types_compatible_p',
-    args: test_c_args)
-  cdata.set('HAVE__BUILTIN_TYPES_COMPATIBLE_P', 1)
-endif
 
 
 # Check if the C compiler understands __builtin_$op_overflow(),
